@@ -1,50 +1,84 @@
 package com.restful.studentmanagement.service.impl;
 
+import com.restful.studentmanagement.dto.UserDto;
 import com.restful.studentmanagement.entity.User;
+import com.restful.studentmanagement.exception.EmailAlreadyExistsException;
+import com.restful.studentmanagement.exception.ResourceNotFoundException;
+import com.restful.studentmanagement.mapper.AutoUserMapper;
 import com.restful.studentmanagement.repository.UserRepository;
 import com.restful.studentmanagement.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private ModelMapper modelMapper;
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
+    public UserDto createUser(UserDto userDto) {
 
-    @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-    }
+        Optional<User> userOptional = userRepository.findByEmail(userDto.getEmail());
 
-    @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User updateUser(User user) {
-        User existingUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + user.getId()));
+        if (userOptional.isPresent())
+            throw new EmailAlreadyExistsException("Email already exists");
         
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        
-        return userRepository.save(existingUser);
+        User user = AutoUserMapper.MAPPER.mapToUser(userDto);
+        User savedUser = userRepository.save(user);
+
+        return AutoUserMapper.MAPPER.mapToUserDto(savedUser);
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User", "id", id)
+                );
+
+        return AutoUserMapper.MAPPER.mapToUserDto(user);
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+
+        return users.stream()
+                .map(AutoUserMapper.MAPPER::mapToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto updateUser(UserDto user) {
+        User userToUpdate = userRepository.findById(user.getId())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User", "id", user.getId())
+                );
+
+        userToUpdate.setFirstName(user.getFirstName());
+        userToUpdate.setLastName(user.getLastName());
+        userToUpdate.setEmail(user.getEmail());
+
+        User updatedUser = userRepository.save(userToUpdate);
+
+        return AutoUserMapper.MAPPER.mapToUserDto(updatedUser);
     }
 
     @Override
     public void deleteUserById(Long id) {
+
+        User userToDelete = userRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User", "id", id)
+                );
+
         userRepository.deleteById(id);
     }
 }
