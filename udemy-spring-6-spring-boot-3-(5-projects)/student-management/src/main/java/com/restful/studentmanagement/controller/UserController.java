@@ -1,12 +1,18 @@
 package com.restful.studentmanagement.controller;
 
 
+import com.restful.studentmanagement.dto.UserDto;
 import com.restful.studentmanagement.entity.User;
+import com.restful.studentmanagement.exception.ErrorDetails;
+import com.restful.studentmanagement.exception.ResourceNotFoundException;
 import com.restful.studentmanagement.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,33 +23,34 @@ public class UserController {
     private UserService userService;
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user) {
+        UserDto savedUser = userService.createUser(user);
+        return ResponseEntity.ok(savedUser);
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(
+    public ResponseEntity<UserDto> updateUser(
             @PathVariable("id") Long id,
-            @RequestBody User user
+            @Valid  @RequestBody UserDto user
     ) {
         user.setId(id);
-        User updatedUser = userService.updateUser(user);
+        UserDto updatedUser = userService.updateUser(user);
         return ResponseEntity.ok(updatedUser);
     }
-    
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
