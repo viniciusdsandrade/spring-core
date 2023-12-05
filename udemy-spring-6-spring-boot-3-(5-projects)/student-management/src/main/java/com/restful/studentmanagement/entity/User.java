@@ -1,6 +1,7 @@
 package com.restful.studentmanagement.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,15 +25,21 @@ public class User {
     @Column(
             name = "first_name",
             nullable = false,
-            columnDefinition = "VARCHAR(50)"
+            columnDefinition = "VARCHAR(30)"
     )
     private String firstName;
     
     @Column(
             name = "last_name",
             nullable = false,
-            columnDefinition = "VARCHAR(50)"
+            columnDefinition = "VARCHAR(80)"
     )
     private String lastName;
+    
+    @Email
+    @Column(
+            nullable = false,
+            columnDefinition = "VARCHAR(50)"
+    )
     private String email;
 }
