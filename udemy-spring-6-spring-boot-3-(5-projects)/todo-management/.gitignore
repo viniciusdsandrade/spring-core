@@ -19,6 +19,11 @@ target/
 *.iml
 *.ipr
 
+# Ignorar application.properties
+src/main/resources/application-desktop.properties
+src/main/resources/application-laptop.properties
+
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

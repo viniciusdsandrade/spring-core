@@ -1,18 +1,12 @@
 package com.restful.studentmanagement.controller;
 
-
 import com.restful.studentmanagement.dto.UserDto;
-import com.restful.studentmanagement.entity.User;
-import com.restful.studentmanagement.exception.ErrorDetails;
-import com.restful.studentmanagement.exception.ResourceNotFoundException;
 import com.restful.studentmanagement.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
