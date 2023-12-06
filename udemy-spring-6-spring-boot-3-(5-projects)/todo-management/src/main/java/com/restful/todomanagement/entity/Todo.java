@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "todo")
+@Entity(name = "todos")
 @Table(
-        name = "todo",
+        name = "Todo",
         schema = "db_todo_management"
 )
 public class Todo {
@@ -21,25 +21,12 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(
-            name = "title",
-            nullable = false,
-            columnDefinition = "VARCHAR(255)"
-    )
+    @Column(nullable = false)
     private String title;
 
-    @Column(
-            name = "description",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(nullable = false)
     private String description;
 
-    @Column(
-            name = "completed",
-            nullable = false,
-            columnDefinition = "BOOLEAN"
-    )
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private Boolean completed;
-
 }

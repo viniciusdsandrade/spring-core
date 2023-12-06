@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * <p>Exceção lançada quando já existe um endereço de e-mail cadastrado.
- *<p>
+ * <p>
  * <p>Esta exceção é anotada com {@code @ResponseStatus(HttpStatus.BAD_REQUEST)}, indicando
  * <p>que resultará em uma resposta HTTP 400 (Bad Request) quando lançada.
  */
