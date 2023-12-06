@@ -21,12 +21,24 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(
+            name = "todo-title",
+            nullable = false,
+            columnDefinition = "VARCHAR(50)"
+    )
     private String title;
 
-    @Column(nullable = false)
+    @Column(
+            name = "todo-description",
+            nullable = false,
+            columnDefinition = "VARCHAR(255)"
+    )
     private String description;
 
-    @Column(nullable = false, columnDefinition = "boolean default false")
+    @Column(
+            name = "todo-completed",
+            nullable = false, 
+            columnDefinition = "BOOLEAN DEFAULT FALSE"
+    )
     private Boolean completed;
 }
