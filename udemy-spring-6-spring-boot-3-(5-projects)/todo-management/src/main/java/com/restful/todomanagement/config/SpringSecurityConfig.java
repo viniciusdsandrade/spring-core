@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class SpringSecurityConfig {
     
-    //private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
