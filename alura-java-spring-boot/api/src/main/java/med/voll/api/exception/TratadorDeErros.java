@@ -22,12 +22,19 @@ public class TratadorDeErros {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> tratarErro400(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Object> tratarErroRegraDeNegocio(MethodArgumentNotValidException ex) {
         logger.error("Validation error: {}", ex.getMessage(), ex);
 
         var erros = ex.getFieldErrors();
         var dadosErroValidacaoList = erros.stream().map(DadosErroValidacao::new).toList();
         return ResponseEntity.badRequest().body(dadosErroValidacaoList);
+    }
+
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity<Object> tratarErroRegraDeNegocio(ValidacaoException ex) {
+        logger.error("Validation error: {}", ex.getMessage(), ex);
+
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

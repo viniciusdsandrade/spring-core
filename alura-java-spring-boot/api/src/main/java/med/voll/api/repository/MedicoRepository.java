@@ -30,6 +30,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
             @Param("localDateTime") LocalDateTime localDateTime
     );
 
-    @Query(value = "SELECT m.ativo FROM tb_medicos m WHERE m.id = :id", nativeQuery = true)
-    Boolean findAtivoById(Long id);
+    @Query(value = "SELECT m.ativo " +
+            "FROM tb_medicos m " +
+            "WHERE m.id = :idMedico", nativeQuery = true)
+    Boolean findAtivoById(Long idMedico);
 }

@@ -2,8 +2,9 @@ package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import med.voll.api.dto.consulta.DadosAgendamentoConsulta;
 import med.voll.api.dto.consulta.DadosCancelamentoConsulta;
-import med.voll.api.dto.medico.DadosCadastroMedico;
+import med.voll.api.dto.consulta.DadosDetalhamentoConsulta;
 import med.voll.api.dto.medico.DadosDetalhamentoMedico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,11 @@ public class ConsultaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DadosDetalhamentoMedico> cadastrar(
-            @RequestBody @Valid DadosCadastroMedico dados
-    ) {
-        return null;
+    public ResponseEntity<DadosDetalhamentoConsulta> cadastrar(
+            @RequestBody @Valid DadosAgendamentoConsulta dados
+            ) {
+        var dto = agendaDeConsultas.agendar(dados);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping
