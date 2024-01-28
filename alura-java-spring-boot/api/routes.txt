@@ -1,0 +1,11 @@
+POST    http://localhost:8080/api/v1/medicos
+GET     http://localhost:8080/api/v1/medicos
+GET     http://localhost:8080/api/v1/medicos/{{id}}
+PUT     http://localhost:8080/api/v1/medicos
+DELETE  http://localhost:8080/api/v1/medicos/{{id}}
+
+POST    http://localhost:8080/api/v1/pacientes
+GET     http://localhost:8080/api/v1/pacientes
+GET     http://localhost:8080/api/v1/pacientes/{{id}}
+PUT     http://localhost:8080/api/v1/pacientes
+DELETE  http://localhost:8080/api/v1/pacientes/{{id}}
