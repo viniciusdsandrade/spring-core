@@ -37,7 +37,7 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
-    public Paciente(@Valid DadosCadastroPaciente dados) {
+    public Paciente(DadosCadastroPaciente dados) {
         this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();

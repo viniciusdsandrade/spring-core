@@ -102,4 +102,18 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity<List<ErrorDetails>> handleValidacaoException(ValidacaoException exception,
+                                                                  WebRequest webRequest) {
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                webRequest.getDescription(false),
+                "VALIDATION_ERROR"
+        );
+
+        return new ResponseEntity<>(List.of(errorDetails), HttpStatus.BAD_REQUEST);
+    }
 }
