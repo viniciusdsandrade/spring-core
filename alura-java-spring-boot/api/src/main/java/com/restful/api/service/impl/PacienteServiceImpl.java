@@ -46,6 +46,7 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
+    @Transactional
     public void excluir(Long id) {
         Paciente paciente = pacienteRepository.getReferenceById(id);
         paciente.excluir();

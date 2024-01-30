@@ -2,6 +2,7 @@ package com.restful.api.entity;
 
 import com.restful.api.dto.medico.DadosAtualizacaoMedico;
 import com.restful.api.dto.medico.DadosCadastroMedico;
+import com.restful.api.entity.enums.Especialidade;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -41,7 +42,7 @@ public class Medico {
     private Especialidade especialidade;
 
 
-    public Medico(@Valid DadosCadastroMedico medico) {
+    public Medico(DadosCadastroMedico medico) {
         this.ativo = true;
         this.nome = medico.nome();
         this.email = medico.email();

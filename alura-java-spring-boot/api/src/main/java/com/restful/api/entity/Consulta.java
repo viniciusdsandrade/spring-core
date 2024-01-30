@@ -1,5 +1,6 @@
 package com.restful.api.entity;
 
+import com.restful.api.entity.enums.MotivoCancelamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

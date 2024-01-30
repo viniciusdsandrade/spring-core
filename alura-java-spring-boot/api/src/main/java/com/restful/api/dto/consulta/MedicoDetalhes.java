@@ -1,6 +1,6 @@
 package com.restful.api.dto.consulta;
 
-import com.restful.api.entity.Especialidade;
+import com.restful.api.entity.enums.Especialidade;
 import com.restful.api.entity.Medico;
 
 public record MedicoDetalhes(

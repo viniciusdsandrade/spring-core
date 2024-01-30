@@ -21,7 +21,7 @@ public class Endereco {
     private String cidade;
     private String uf;
 
-    public Endereco(@Valid DadosEndereco dadosEndereco) {
+    public Endereco(DadosEndereco dadosEndereco) {
         this.logradouro = dadosEndereco.logradouro();
         this.bairro = dadosEndereco.bairro();
         this.cep = dadosEndereco.cep();

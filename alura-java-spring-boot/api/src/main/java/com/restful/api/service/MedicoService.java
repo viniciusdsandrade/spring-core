@@ -17,6 +17,7 @@ public interface MedicoService {
     @Transactional
     Medico atualizar(@Valid DadosAtualizacaoMedico dadosAtualizacaoMedico);
 
+    @Transactional
     void excluir(Long id);
 
     Medico buscarPorId(Long id);

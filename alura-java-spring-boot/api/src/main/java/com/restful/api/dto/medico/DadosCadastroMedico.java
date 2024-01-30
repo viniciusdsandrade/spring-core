@@ -1,7 +1,7 @@
 package com.restful.api.dto.medico;
 
 import com.restful.api.dto.endereco.DadosEndereco;
-import com.restful.api.entity.Especialidade;
+import com.restful.api.entity.enums.Especialidade;
 import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -14,7 +14,7 @@ public record DadosCadastroMedico(
         @NotNull(message = "O nome não pode ser nulo")
         String nome,
 
-        @Email
+        @Email(message = "O email é inválido")
         @NotBlank(message = "O email não pode ser nulo")
         @Column(unique = true)
         String email,

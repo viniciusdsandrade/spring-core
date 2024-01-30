@@ -17,6 +17,7 @@ public interface PacienteService {
     @Transactional
     Paciente atualizar(@Valid DadosAtualizacaoPaciente dadosAtualizacaoPaciente);
 
+    @Transactional
     void excluir(Long id);
 
     Paciente buscarPorId(Long id);

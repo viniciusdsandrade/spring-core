@@ -1,7 +1,7 @@
 package com.restful.api.dto.medico;
 
 import com.restful.api.entity.Endereco;
-import com.restful.api.entity.Especialidade;
+import com.restful.api.entity.enums.Especialidade;
 import com.restful.api.entity.Medico;
 
 public record DadosDetalhamentoMedico(

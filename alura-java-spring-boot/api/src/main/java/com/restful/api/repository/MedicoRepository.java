@@ -1,6 +1,6 @@
 package com.restful.api.repository;
 
-import com.restful.api.entity.Especialidade;
+import com.restful.api.entity.enums.Especialidade;
 import com.restful.api.entity.Medico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

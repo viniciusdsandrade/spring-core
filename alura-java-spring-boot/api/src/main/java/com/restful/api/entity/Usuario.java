@@ -16,10 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity
+@Entity(name = "Usuario")
 @Table(
         name = "tb_usuario",
-        schema = "db_api_voll_med"
+        schema = "db_api_voll_med",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_usuario_login", columnNames = "login")
+        }
 )
 public class Usuario implements UserDetails {
 

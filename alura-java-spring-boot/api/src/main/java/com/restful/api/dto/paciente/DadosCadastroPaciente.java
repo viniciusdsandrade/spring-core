@@ -14,7 +14,7 @@ public record DadosCadastroPaciente(
         @NotBlank(message = "O nome não pode ser nulo")
         String nome,
 
-        @Email
+        @Email(message = "O email é inválido")
         @NotBlank(message = "O email não pode ser nulo")
         String email,
 
@@ -22,7 +22,7 @@ public record DadosCadastroPaciente(
         @Pattern(regexp = "(?:(?:\\+|00)\\d{1,3}[- ]?)?(?:\\(\\d{2,3}\\)|\\d{2,3})[- ]?\\d{4,5}[- ]?\\d{4}")
         String telefone,
 
-        @CPF
+        @CPF(message = "O CPF é inválido")
         @NotBlank(message = "O CPF não pode ser nulo")
         String cpf,
 
