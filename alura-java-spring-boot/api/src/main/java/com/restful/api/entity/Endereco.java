@@ -4,9 +4,11 @@ import com.restful.api.dto.endereco.DadosEndereco;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Embeddable
 @Getter
 @NoArgsConstructor
@@ -39,5 +41,18 @@ public class Endereco {
         if (dados.cidade() != null) this.cidade = dados.cidade();
         if (dados.numero() != null) this.numero = dados.numero();
         if (dados.complemento() != null) this.complemento = dados.complemento();
+    }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "\t\t\"logradouro\": \"" + logradouro + "\",\n" +
+                "\t\t\"bairro\": \"" + bairro + "\",\n" +
+                "\t\t\"cep\": \"" + cep + "\",\n" +
+                "\t\t\"numero\": \"" + numero + "\",\n" +
+                "\t\t\"complemento\": \"" + complemento + "\",\n" +
+                "\t\t\"cidade\": \"" + cidade + "\",\n" +
+                "\t\t\"uf\": \"" + uf + "\"\n" +
+                "\t}";
     }
 }

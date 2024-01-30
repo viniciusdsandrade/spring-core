@@ -4,11 +4,9 @@ import com.restful.api.dto.paciente.DadosAtualizacaoPaciente;
 import com.restful.api.dto.paciente.DadosCadastroPaciente;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -55,4 +53,18 @@ public class Paciente {
     public void excluir() {
         this.ativo = false;
     }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "    \"id\": " + id + ",\n" +
+                "    \"nome\": \"" + nome + "\",\n" +
+                "    \"telefone\": \"" + telefone + "\",\n" +
+                "    \"email\": \"" + email + "\",\n" +
+                "    \"cpf\": \"" + cpf + "\",\n" +
+                "    \"ativo\": " + ativo + ",\n" +
+                "    \"endereco\": " + endereco.toString() + "\n" +
+                "}";
+    }
+
 }
