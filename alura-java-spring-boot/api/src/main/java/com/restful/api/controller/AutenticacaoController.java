@@ -1,12 +1,10 @@
 package com.restful.api.controller;
 
-
 import com.restful.api.dto.usuario.DadosAutenticacao;
 import com.restful.api.dto.usuario.DadosTokenJWT;
 import com.restful.api.entity.Usuario;
 import com.restful.api.security.TokenService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

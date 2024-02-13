@@ -3,7 +3,6 @@ package com.restful.api.entity;
 import com.restful.api.dto.paciente.DadosAtualizacaoPaciente;
 import com.restful.api.dto.paciente.DadosCadastroPaciente;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.*;
 
 @Builder

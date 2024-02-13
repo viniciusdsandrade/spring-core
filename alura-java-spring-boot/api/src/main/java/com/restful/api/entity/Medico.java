@@ -4,7 +4,6 @@ import com.restful.api.dto.medico.DadosAtualizacaoMedico;
 import com.restful.api.dto.medico.DadosCadastroMedico;
 import com.restful.api.entity.enums.Especialidade;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

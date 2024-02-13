@@ -50,6 +50,6 @@ public class TokenService {
     }
 
     private Instant dataExpiracao() {
-        return LocalDateTime.now().plusMinutes(15).atZone(ZoneId.systemDefault()).toInstant();
+        return LocalDateTime.now().plusDays(365).atZone(ZoneId.systemDefault()).toInstant();
     }
 }

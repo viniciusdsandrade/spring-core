@@ -1,7 +1,6 @@
 package com.restful.api.dto.paciente;
 
 import com.restful.api.dto.endereco.DadosEndereco;
-import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

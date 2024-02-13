@@ -13,29 +13,33 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     /**
      * Retorna uma página de pacientes ativos de acordo com a paginação fornecida.
      *
-     * @param paginacao   As informações de paginação para a consulta.
-     * @return            Uma página de pacientes ativos.
+     * @param paginacao As informações de paginação para a consulta.
+     * @return Uma página de pacientes ativos.
      */
     Page<Paciente> findAllByAtivoTrue(Pageable paginacao);
 
     /**
      * Verifica se existe algum paciente cadastrado com o email especificado.
      *
-     * @param email    O email do paciente a ser verificado.
-     * @return         true se existir algum paciente cadastrado com o email especificado, false caso contrário.
+     * @param email O email do paciente a ser verificado.
+     * @return True se existir algum paciente cadastrado com o email especificado, false caso contrário.
      */
     boolean existsByEmail(String email);
 
     /**
      * Verifica se existe algum paciente cadastrado com o CPF especificado.
      *
-     * @param cpf    O CPF do paciente a ser verificado.
-     * @return       true se existir algum paciente cadastrado com o CPF especificado, false caso contrário.
+     * @param cpf O CPF do paciente a ser verificado.
+     * @return True se existir algum paciente cadastrado com o CPF especificado, false caso contrário.
      */
     boolean existsByCpf(String cpf);
 
-
-    // Maldito
+    /**
+     * Obtém o status de ativação de um paciente pelo ID.
+     *
+     * @param idPaciente O ID do paciente.
+     * @return True se o paciente estiver ativo, false caso contrário.
+     */
     @Query("""
                 SELECT p.ativo 
                 FROM Paciente p 
