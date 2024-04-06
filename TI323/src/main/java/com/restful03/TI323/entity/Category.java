@@ -2,6 +2,7 @@ package com.restful03.TI323.entity;
 
 import com.restful03.TI323.dto.category.DadosAtualizacaoCategory;
 import com.restful03.TI323.dto.category.DadosCadastroCategory;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -19,7 +20,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "Category")
 @Table(name = "tb_category",
-        schema = "db_api_ti323")
+        schema = "db_api_ti323",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_category_name", columnNames = "name")
+        }
+)
+@Schema(description = "Entidade que representa uma categoria")
 public class Category implements Cloneable {
 
     @Id

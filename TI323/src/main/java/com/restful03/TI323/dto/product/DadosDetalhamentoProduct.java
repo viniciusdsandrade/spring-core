@@ -2,12 +2,15 @@ package com.restful03.TI323.dto.product;
 
 import com.restful03.TI323.dto.category.DadosListagemCategory;
 import com.restful03.TI323.entity.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Schema(name = "DadosDetalhamentoProduct",
+        description = "Representa os dados detalhados de um produto")
 public record DadosDetalhamentoProduct(
         Long id,
         String name,

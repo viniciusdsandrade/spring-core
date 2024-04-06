@@ -1,11 +1,14 @@
 package com.restful03.TI323.dto.product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 
+@Schema(name = "DadosAtualizacaoProduct",
+        description = "Representação dos dados de atualização de um produto")
 public record DadosAtualizacaoProduct(
         @NotNull(message = "Id do produto não pode ser nulo")
         Long id,

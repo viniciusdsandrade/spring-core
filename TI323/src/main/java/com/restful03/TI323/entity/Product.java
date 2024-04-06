@@ -2,6 +2,7 @@ package com.restful03.TI323.entity;
 
 import com.restful03.TI323.dto.product.DadosAtualizacaoProduct;
 import com.restful03.TI323.dto.product.DadosCadastroProduct;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -20,7 +21,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity(name = "Product")
 @Table(name = "tb_product",
-        schema = "db_api_ti323")
+        schema = "db_api_ti323",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_product_name", columnNames = "name")
+        }
+)
+@Schema(description = "Entidade que representa um produto")
 public class Product implements Cloneable {
 
     @Id

@@ -1,11 +1,14 @@
 package com.restful03.TI323.dto.product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 
+@Schema(name = "DadosCadastroProduct",
+        description = "Representa os dados necessários para cadastrar um produto")
 public record DadosCadastroProduct(
         @NotNull(message = "Nome do produto não pode ser nulo")
         @Column(unique = true)
