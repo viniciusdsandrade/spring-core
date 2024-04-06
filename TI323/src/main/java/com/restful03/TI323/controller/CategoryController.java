@@ -1,11 +1,21 @@
 package com.restful03.TI323.controller;
 
+import com.restful03.TI323.dto.category.DadosAtualizacaoCategory;
+import com.restful03.TI323.dto.category.DadosCadastroCategory;
+import com.restful03.TI323.dto.category.DadosDetalhamentoCategory;
+import com.restful03.TI323.dto.category.DadosListagemCategory;
 import com.restful03.TI323.entity.Category;
 import com.restful03.TI323.service.CategoryService;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -19,29 +29,41 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        return ResponseEntity.ok(categoryService.save(category));
+    @Transactional
+    public ResponseEntity<DadosDetalhamentoCategory> create(
+            @RequestBody @Valid DadosCadastroCategory dadosCadastroCategory,
+            UriComponentsBuilder uriComponentsBuilder
+    ) {
+        Category category = categoryService.cadastrar(dadosCadastroCategory);
+        URI uri = uriComponentsBuilder.path("/api/v1/categories/{id}").buildAndExpand(category.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoCategory(category));
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return ResponseEntity.ok(categoryService.findAll());
+    public ResponseEntity<Page<DadosListagemCategory>> list(
+            @PageableDefault(size = 5) Pageable pageable
+    ) {
+        Page<DadosListagemCategory> categories = categoryService.listar(pageable);
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryService.findById(id));
+    public ResponseEntity<DadosDetalhamentoCategory> detailById(@PathVariable Long id) {
+        DadosDetalhamentoCategory category = categoryService.buscarPorId(id);
+        return ResponseEntity.ok(category);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        category.setId(id);
-        return ResponseEntity.ok(categoryService.save(category));
+    @Transactional
+    @PutMapping
+    public ResponseEntity<DadosDetalhamentoCategory> update(@RequestBody DadosAtualizacaoCategory category) {
+        Category categoryUpdated = categoryService.atualizar(category);
+        return ResponseEntity.ok(new DadosDetalhamentoCategory(categoryUpdated));
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        categoryService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        categoryService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }

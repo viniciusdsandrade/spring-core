@@ -1,18 +1,30 @@
 package com.restful03.TI323.service;
 
+import com.restful03.TI323.dto.product.DadosAtualizacaoProduct;
+import com.restful03.TI323.dto.product.DadosCadastroProduct;
+import com.restful03.TI323.dto.product.DadosDetalhamentoProduct;
+import com.restful03.TI323.dto.product.DadosListagemProduct;
 import com.restful03.TI323.entity.Product;
-
-import java.util.List;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-    Product save(Product product);
+    @Transactional
+    Product cadastrar(@Valid DadosCadastroProduct dadosCadastroProduct);
 
-    List<Product> findAll();
+    @Transactional
+    Product atualizar(@Valid DadosAtualizacaoProduct dadosAtualizacaoProduct);
 
-    Product findById(Long id);
+    @Transactional
+    void desativar(Long id);
 
-    Product update(Long id, Product product);
+    @Transactional
+    void ativar(Long id);
 
-    void deleteById(Long id);
+    Product buscarPorId(Long id);
+
+    Page<DadosListagemProduct> listar(Pageable pageable);
 }

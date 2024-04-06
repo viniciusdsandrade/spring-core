@@ -1,18 +1,27 @@
 package com.restful03.TI323.service;
 
+import com.restful03.TI323.dto.category.DadosAtualizacaoCategory;
+import com.restful03.TI323.dto.category.DadosCadastroCategory;
+import com.restful03.TI323.dto.category.DadosDetalhamentoCategory;
+import com.restful03.TI323.dto.category.DadosListagemCategory;
 import com.restful03.TI323.entity.Category;
-
-import java.util.List;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CategoryService {
 
-    Category save(Category category);
+    @Transactional
+    Category cadastrar(@Valid DadosCadastroCategory dadosCadastroCategory);
 
-    List<Category> findAll();
+    DadosDetalhamentoCategory buscarPorId(Long id);
 
-    Category findById(Long id);
+    Page<DadosListagemCategory> listar(Pageable pageable);
 
-    Category update(Long id, Category category);
+    @Transactional
+    Category atualizar(@Valid DadosAtualizacaoCategory dadosCadastroCategory);
 
-    void deleteById(Long id);
+    @Transactional
+    void deletar(Long id);
 }

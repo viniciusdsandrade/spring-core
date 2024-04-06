@@ -1,50 +1,91 @@
 package com.restful03.TI323.service.impl;
 
+import com.restful03.TI323.dto.product.DadosAtualizacaoProduct;
+import com.restful03.TI323.dto.product.DadosCadastroProduct;
+import com.restful03.TI323.dto.product.DadosListagemProduct;
+import com.restful03.TI323.entity.Category;
 import com.restful03.TI323.entity.Product;
+import com.restful03.TI323.exception.DuplicateEntryException;
+import com.restful03.TI323.exception.EntityNotFoundException;
+import com.restful03.TI323.repository.CategoryRepository;
 import com.restful03.TI323.repository.ProductRepository;
 import com.restful03.TI323.service.ProductService;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Service
+@Service("ProductServiceImpl")
 public class ProductServiceImpl implements ProductService {
 
-
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository,
+                              CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
-    public Product save(Product product) {
-        return productRepository.save(product);
+    @Transactional
+    public Product cadastrar(@Valid DadosCadastroProduct dadosCadastroProduct) {
+        if (productRepository.existsByName(dadosCadastroProduct.name()))
+            throw new DuplicateEntryException("Produto já cadastrado");
+
+        if (!categoryRepository.existsById(dadosCadastroProduct.categoryId()))
+            throw new EntityNotFoundException("Categoria não encontrada");
+
+        Product product = new Product(dadosCadastroProduct);
+        product.addCategory(new Category(dadosCadastroProduct.categoryId()));
+        productRepository.save(product);
+        return product;
     }
 
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    @Transactional
+    public Product atualizar(DadosAtualizacaoProduct dadosAtualizacaoProduct) {
+        if (!productRepository.existsById(dadosAtualizacaoProduct.id()))
+            throw new EntityNotFoundException("Produto não encontrado");
+
+        Product product = productRepository.getReferenceById(dadosAtualizacaoProduct.id());
+        product.atualizarInformacoes(dadosAtualizacaoProduct);
+        return product;
     }
 
     @Override
-    public Product findById(Long id) {
-        return productRepository.findById(id).orElse(null);
+    public void desativar(Long id) {
+        if (!productRepository.existsById(id))
+            throw new EntityNotFoundException("Produto não encontrado");
+
+        Product product = productRepository.getReferenceById(id);
+        product.desativarProduto();
     }
 
     @Override
-    public Product update(Long id, Product product) {
-        Product productToUpdate = productRepository.getReferenceById(id);
+    public void ativar(Long id) {
+        if (!productRepository.existsById(id))
+            throw new EntityNotFoundException("Produto não encontrado");
 
-        productToUpdate.setName(product.getName());
-        productToUpdate.setDescription(product.getDescription());
-        productToUpdate.setPrice(product.getPrice());
-
-        return productRepository.save(productToUpdate);
+        Product product = productRepository.getReferenceById(id);
+        product.ativarProduto();
     }
 
     @Override
-    public void deleteById(Long id) {
-        productRepository.deleteById(id);
+    public Product buscarPorId(Long id) {
+        if (!productRepository.existsById(id))
+            throw new EntityNotFoundException("Produto não encontrado");
+
+        return productRepository.getReferenceById(id);
+    }
+
+    @Override
+    public Page<DadosListagemProduct> listar(Pageable pageable) {
+        if (productRepository.count() == 0)
+            throw new EntityNotFoundException("Nenhum produto encontrado");
+
+        Page<Product> products = productRepository.findAllByAvailableTrue(pageable);
+        return products.map(DadosListagemProduct::new);
     }
 }
