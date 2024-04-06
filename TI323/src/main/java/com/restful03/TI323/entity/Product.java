@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,7 +41,6 @@ public class Product implements Cloneable {
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @Setter(AccessLevel.NONE)
     private Set<Category> categories = new HashSet<>();
 
     public void addCategory(Category category) {
@@ -54,6 +52,12 @@ public class Product implements Cloneable {
         this.description = dadosCadastroProduct.description();
         this.price = dadosCadastroProduct.price();
         this.available = dadosCadastroProduct.available();
+
+        Category category = new Category((dadosCadastroProduct.categoryId()));
+        this.categories.add(category);
+
+        this.dataCreated = LocalDateTime.now();
+        this.lastUpdated = LocalDateTime.now();
     }
 
     public void desativarProduto() {

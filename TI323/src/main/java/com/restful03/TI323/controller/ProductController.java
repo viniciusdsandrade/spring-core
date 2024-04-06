@@ -63,13 +63,13 @@ public class ProductController {
     @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<Void> deactivate(@PathVariable Long id) {
         productService.desativar(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @Transactional
     @PutMapping("/activate/{id}")
     public ResponseEntity<Void> activate(@PathVariable Long id) {
         productService.ativar(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }

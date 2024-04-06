@@ -15,7 +15,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Category")
@@ -30,7 +29,6 @@ public class Category implements Cloneable {
     private String description;
 
     @ManyToMany(mappedBy = "categories")
-    @Setter(AccessLevel.NONE)
     private Set<Product> products = new HashSet<>();
 
     @CreationTimestamp
@@ -43,18 +41,18 @@ public class Category implements Cloneable {
         this.products.add(product);
     }
 
+    public void atualizarInformacoes(DadosAtualizacaoCategory dadosCadastroCategory) {
+        this.name = dadosCadastroCategory.name();
+        this.description = dadosCadastroCategory.description();
+    }
+
     public Category(@Valid DadosCadastroCategory dadosCadastroCategory) {
         this.name = dadosCadastroCategory.name();
         this.description = dadosCadastroCategory.description();
     }
 
-    public Category(Long aLong) {
-        this.id = aLong;
-    }
-
-    public void atualizarInformacoes(DadosAtualizacaoCategory dadosCadastroCategory) {
-        this.name = dadosCadastroCategory.name();
-        this.description = dadosCadastroCategory.description();
+    public Category(Long id) {
+        this.id = id;
     }
 
     public Category(Category category) {
@@ -80,13 +78,14 @@ public class Category implements Cloneable {
     }
 
     @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+    public final boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        Class<?> oEffectiveClass = obj instanceof HibernateProxy ? ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass() : obj.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Category category = (Category) o;
+
+        Category category = (Category) obj;
         return getId() != null && Objects.equals(getId(), category.getId());
     }
 
